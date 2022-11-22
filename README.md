@@ -110,7 +110,7 @@ export FABRIC_CFG_PATH=${PWD}/artifacts
 
 #### 3. generate the genesis block
 
-../bin/configtxgen -profile TraceOrdererGenesis -outputBlock ./artifacts/network/genesis.block
+../bin/configtxgen -profile TraceOrdererGenesis -outputBlock ./artifacts/network/genesis.block -channelID byn-sys-chnl
 
 #### 4. export channel name
 
