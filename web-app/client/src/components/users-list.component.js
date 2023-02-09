@@ -10,7 +10,7 @@ const User = (props) => (
     <td>{props.user.UserType}</td>
     <td>{props.user.Address}</td>
     <td>
-      <Link to={"/updateUser/" + props.user._id}>Edit</Link>
+      <Link to={"/updateUser/" + props.user.UserID}>Edit</Link>
     </td>
   </tr>
 );
@@ -31,9 +31,12 @@ export class UsersList extends Component {
     };
     const role = sessionStorage.getItem('role')
 
-    axios
-      .get("http://192.168.0.108:8090/user/all/manufacturer", {headers: headers})
+    
+      // .get("http://192.168.0.108:8090/user/all/manufacturer", {headers: headers})
+      axios
+      .get("http://localhost:8090/user/all/manufacturer", {headers: headers})
       .then((response) => {
+        console.log("response "+JSON.stringify(response))
         this.setState({
           users: response.data.data,
         });

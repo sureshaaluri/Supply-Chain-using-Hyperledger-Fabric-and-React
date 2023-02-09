@@ -15,7 +15,7 @@ const User = (props) => (
 
 
 
-export class CreateOrder extends Component {
+export class TransactOrder extends Component {
  
 
     constructor(props) {
@@ -120,20 +120,30 @@ export class CreateOrder extends Component {
           "x-access-token": sessionStorage.getItem("jwtToken"),
         };
 
+        if(this.state.usertype == "retailer"){
+          
           axios
-        .post("http://localhost:8090/product/order", SubmitProduct, {
+        .post("http://localhost:8090/transact/consumer", SubmitProduct, {
           headers: headers,
         })
         .then((res) => console.log(res));
 
+        }else{
+          axios
+          .post("http://localhost:8090/transact/", SubmitProduct, {
+            headers: headers,
+          })
+          .then((res) => console.log(res));
+  
         }
 
+      }
 
 
     render() { 
     return (
       <div>
-      <h3>Create New Order</h3>
+      <h3>Transact Order</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group">
           <label>Products: </label>
@@ -168,7 +178,7 @@ export class CreateOrder extends Component {
         <div className="form-group">
           <input
             type="submit"
-            value="Create Order"
+            value="Transact Order"
             className="btn btn-primary"
           />
         </div>
@@ -178,4 +188,4 @@ export class CreateOrder extends Component {
   }
 }
 
-export default CreateOrder
+export default TransactOrder

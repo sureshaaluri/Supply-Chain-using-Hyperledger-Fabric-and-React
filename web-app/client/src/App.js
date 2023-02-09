@@ -11,6 +11,9 @@ import EditProduct from "./components/edit-product.component";
 import UsersList from "./components/users-list.component";
 import ProductsList from "./components/products-list.component";
 import OrdersList from "./components/orders-list.component";
+import TransactOrder from "./components/transact-order-component";
+import QueryProduct from "./components/query-product-component";
+import DeliveryOrder from "./components/delivery-product-component";
 
 function App() {
   const role = sessionStorage.getItem("role");
@@ -26,9 +29,12 @@ function App() {
         <Route path="/createProduct" component={CreateProduct} />
         <Route path="/createOrder" component={CreateOrder} />
         <Route path="/updateUser/:id" component={EditUser} />
-        <Route path="/updateProduct/:id" component={EditProduct} />
+        <Route path="/edit/:id" component={EditProduct} />
         <Route path="/users" component={UsersList} />
         <Route path="/orders" component={OrdersList} />
+        <Route path="/transactProduct" component={TransactOrder} />
+        <Route path="/queryProduct" component={QueryProduct} />
+        <Route path="/deliveryProduct" component={DeliveryOrder} />
       </div>
     </Router>
   );

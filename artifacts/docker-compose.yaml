@@ -67,7 +67,7 @@ services:
 
   ca.manufacturer.example.com:
     container_name: ca.manufacturer.example.com
-    image: hyperledger/fabric-ca:$IMAGE_TAG
+    image: hyperledger/fabric-ca:latest
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.manufacturer.example.com
@@ -85,7 +85,7 @@ services:
 
   ca.middlemen.example.com:
     container_name: ca.middlemen.example.com
-    image: hyperledger/fabric-ca:$IMAGE_TAG
+    image: hyperledger/fabric-ca:latest
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.middlemen.example.com
@@ -103,7 +103,7 @@ services:
 
   ca.consumer.example.com:
     container_name: ca.consumer.example.com
-    image: hyperledger/fabric-ca:$IMAGE_TAG
+    image: hyperledger/fabric-ca:latest
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.consumer.example.com
@@ -121,7 +121,7 @@ services:
 
   cli:
     container_name: cli
-    image: hyperledger/fabric-tools:$IMAGE_TAG
+    image: hyperledger/fabric-tools:latest
     tty: true
     stdin_open: true
     environment:

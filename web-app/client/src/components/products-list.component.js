@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Product = (props) => (
+
+  // console.log("Props "+props)
   <tr>
     <td>{props.product.ProductID}</td>
     <td>{props.product.Name}</td>
@@ -11,7 +13,8 @@ const Product = (props) => (
     <td>{props.product.Status}</td>
     <td>{props.product.Price}</td>
     <td>
-      <Link to={"/edit/" + props.product._id}>Edit</Link>
+    {/* <Link to={"/edit/" + props.product.ProductID}>Edit</Link> */}
+      <Link to={"/edit/" + props.product.ProductID}>Edit</Link>
     </td>
   </tr>
 );
@@ -31,11 +34,14 @@ export class ProductsList extends Component {
       "x-access-token": sessionStorage.getItem("jwtToken"),
     };
 
-    axios
-      .get("http://192.168.0.108:8090/product/" + this.state.role, {
+    
+      // .get("http://192.168.0.108:8090/product/" + this.state.role, {
+        axios
+        .get("http://localhost:8090/product/" + this.state.role, {
         headers: headers,
       })
       .then((response) => {
+        console.log("response "+JSON.stringify(response))
         this.setState({
           products: response.data.data,
         });

@@ -10,5 +10,7 @@ authRouter.use('/signup/:role', roleMiddleware);
 authRouter.post('/signup/:role', controller.signup);
 authRouter.get('/all/:role', controller.getAllUser);
 authRouter.post('/signin/:role', controller.signin);
+authRouter.get('/:UserId/:role', controller.getUserbyId);
+
 
 module.exports = authRouter;

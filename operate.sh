@@ -14,8 +14,8 @@ function printHelp() {
     echo "Usage: "
     echo "  operate.sh <mode> [-y]"
     echo "    <mode> - One of 'up', 'down', 'restart', 'generate'"
-    echo "      - 'up'        - Bring up the network with docker-compose up"
-    echo "      - 'down'      - Clear the network with docker-compose down"
+    echo "      - 'up'        - Bring up the network with docker compose up"
+    echo "      - 'down'      - Clear the network with docker compose down"
     echo "      - 'restart'   - Restart the network"
     echo "      - 'generate'  - Generate required certificates and genesis block"
     echo "    -y              - Automatic yes to prompts"
@@ -109,7 +109,7 @@ function networkUp() {
     export MANUFACTURER_CA_PRIVATE_KEY=$(cd ./artifacts/network/crypto-config/peerOrganizations/manufacturer.example.com/ca && ls *_sk)
     export MIDDLEMEN_CA_PRIVATE_KEY=$(cd ./artifacts/network/crypto-config/peerOrganizations/middlemen.example.com/ca && ls *_sk)
     export CONSUMER_CA_PRIVATE_KEY=$(cd ./artifacts/network/crypto-config/peerOrganizations/consumer.example.com/ca && ls *_sk)
-    docker-compose -f $COMPOSE_FILE up -d 2>&1
+    docker compose -f $COMPOSE_FILE up -d 2>&1
     if [ $? -ne 0 ]; then
         echo "ERROR !!!! Unable to start network"
         exit 1
@@ -129,7 +129,7 @@ function networkUp() {
 #     export MIDDLEMEN_CA_PRIVATE_KEY=$(cd ./artifacts/network/crypto-config/peerOrganizations/middlemen.example.com/ca && ls *_sk)
 #     export CONSUMER_CA_PRIVATE_KEY=$(cd ./artifacts/network/crypto-config/peerOrganizations/consumer.example.com/ca && ls *_sk)
 
-#     docker-compose -f $COMPOSE_FILE down --volumes --remove-orphans
+#     docker compose -f $COMPOSE_FILE down --volumes --remove-orphans
 
 #     if [ $MODE != "restart" ]; then
 #         docker run -v $PWD:/tmp/jnu_hlfn --rm hyperledger/fabric-tools:$IMAGETAG rm -rf /tmp/jnu_hlfn/ledgers-backup
@@ -178,7 +178,7 @@ function generateChannelArtifacts() {
     echo "CONSENSUS_TYPE="$CONSENSUS_TYPE
     set -x
     if [ $CONSENSUS_TYPE == "solo" ]; then
-    configtxgen -profile TraceOrdererGenesis -outputBlock ./artifacts/network/genesis.block
+    configtxgen -profile TraceOrdererGenesis -outputBlock ./artifacts/network/genesis.block -channelID byn-sys-chnl
     else
         set +x
         echo "unrecognized CONSESUS_TYPE='$CONSENSUS_TYPE'. exiting"

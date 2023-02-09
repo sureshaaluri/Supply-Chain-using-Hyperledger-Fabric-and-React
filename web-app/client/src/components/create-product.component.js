@@ -41,11 +41,13 @@ export class CreateProduct extends Component {
 
     console.log(product);
 
-    axios
-      .post("http://192.168.0.108:8090/product", product, { headers: headers })
+    
+      // .post("http://192.168.0.108:8090/product", product, { headers: headers })
+      axios
+      .post("http://localhost:8090/product", product, { headers: headers })
       .then((res) => console.log(res));
 
-    window.location = "/products";
+    // window.location = "/products";
   }
 
   render() {

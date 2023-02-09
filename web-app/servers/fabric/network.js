@@ -20,6 +20,7 @@ function getConnectionMaterial(isManufacturer, isMiddleMen, isConsumer) {
     const connectionMaterial = {};
 
     if (isManufacturer) {
+        
         connectionMaterial.walletPath = path.join(process.cwd(), process.env.MANUFACTURER_WALLET);
         connectionMaterial.connection = manufacturerCcp;
         connectionMaterial.orgMSPID = process.env.MANUFACTURER_MSP;
@@ -49,10 +50,14 @@ exports.connect = async (isManufacturer, isMiddleMen, isConsumer, userID) => {
 
     try {
         const { walletPath, connection } = getConnectionMaterial(isManufacturer,isMiddleMen,isConsumer);
-
+        console.log("wallet path "+walletPath)
         const wallet = new FileSystemWallet(walletPath);
+        console.log("wallet  "+JSON.stringify(wallet))
+        console.log("User Id "+userID)
         const userExists = await wallet.exists(userID);
+        
         if (!userExists) {
+            
             console.error(`An identity for the user ${userID} does not exist in the wallet. Register ${userID} first`);
             return { status: 401, error: 'User identity does not exist in the wallet.' };
         }
@@ -62,7 +67,9 @@ exports.connect = async (isManufacturer, isMiddleMen, isConsumer, userID) => {
             identity: userID,
             discovery: { enabled: true, asLocalhost: Boolean(process.env.AS_LOCALHOST) },
         });
+        // console.log("hi I am manufacturer")
         const network = await gateway.getNetwork(process.env.CHANNEL);
+        // console.log("hi I am manufacturer123456")
         const contract = await network.getContract(process.env.CONTRACT);
         console.log('Connected to fabric network successly.');
 
@@ -98,9 +105,10 @@ exports.invoke = async (networkObj, ...funcAndArgs) => {
     try {
         console.log(`Invoke parameter: ${funcAndArgs}`);
         const funcAndArgsStrings = funcAndArgs.map(elem => String(elem));
-        console.log(funcAndArgsStrings);
+        console.log("funcAndArgsStrings", funcAndArgsStrings);
+        console.log("networkObj", networkObj);
         const response = await networkObj.contract.submitTransaction(...funcAndArgsStrings);
-        console.log(response);
+        console.log("submitTransaction response "+ response);
         console.log(`Transaction ${funcAndArgs} has been submitted: ${response}`);
 
         return JSON.parse(response);

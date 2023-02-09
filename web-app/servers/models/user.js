@@ -27,14 +27,15 @@ exports.signin = async (isManufacturer, isMiddlemen, isConsumer, information) =>
     const { id, password } = information;
 
     const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, id);
+    console.log("networkobj ", networkObj)
     let contractRes;
     contractRes = await network.invoke(networkObj, 'signIn', id, password);
+    console.log("contractRes "+JSON.stringify(contractRes))
     const error = networkObj.error || contractRes.error;
     if (error) {
         const status = networkObj.status || contractRes.status;
         return apiResponse.createModelRes(status, error);
     }
-    console.log(contractRes);
     const { Name, UserType } = contractRes;
     const accessToken = authenticateUtil.generateAccessToken({ id, UserType, Name });
     return apiResponse.createModelRes(200, 'Success', { id, UserType, Name, accessToken });
@@ -44,8 +45,28 @@ exports.getAllUser = async (isManufacturer, isMiddlemen, isConsumer, information
     const { id } = information;
 
     const networkObj = await network.connect(true, false, false, 'admin');
+    console.log("hi models");
 
     const contractRes = await network.invoke(networkObj, 'queryAll', 'User');
+    
+    const error = networkObj.error || contractRes.error;
+    if (error) {
+        const status = networkObj.status || contractRes.status;
+        return apiResponse.createModelRes(status, error);
+    }
+
+    return apiResponse.createModelRes(200, 'Success', contractRes);
+};
+
+
+
+exports.getUserbyId = async ( isManufacturer, isMiddlemen, isConsumer ,information )=> {
+    const { UserId, id } = information;
+
+    console.log("edit Users"+UserId , id)
+
+    const networkObj = await network.connect(isManufacturer, isMiddlemen, isConsumer, id);
+    const contractRes = await network.invoke(networkObj, 'queryAsset', UserId);
 
     const error = networkObj.error || contractRes.error;
     if (error) {

@@ -20,14 +20,24 @@ export class EditUser extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get("http://localhost:5000/users/" + this.props.match.params.id)
-      .then((response) => {
+
+    const role = sessionStorage.getItem("role");
+    const headers = {
+      "x-access-token": sessionStorage.getItem('jwtToken')
+    };
+    // .get("http://localhost:8090/user/" + this.props.match.params.id)
+
+   
+    axios.get("http://localhost:8090/user/" +  this.props.match.params.id+"/"+ role,{
+      headers: headers,
+    })
+    .then((response) => {
+    console.log("response for a user "+JSON.stringify(response))
         this.setState({
-          name: response.data.name,
-          email: response.data.email,
-          usertype: response.data.usertype,
-          address: response.data.address,
+          name: response.data.data.Name,
+          email: response.data.data.Email,
+          usertype: response.data.data.UserType,
+          address: response.data.data.Address,
         });
       });
   }
@@ -59,6 +69,8 @@ export class EditUser extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    const role = sessionStorage.getItem("role");
+
     const user = {
       name: this.state.name,
       email: this.state.email,
@@ -68,9 +80,10 @@ export class EditUser extends Component {
     console.log(this.props.match);
     console.log(user);
 
+    // "http://localhost:5000/user/update/" + this.props.match.params.id,
     axios
       .post(
-        "http://localhost:5000/users/update/" + this.props.match.params.id,
+        "http://localhost:8090/user/update/" + this.props.match.params.id,
         user
       )
       .then((res) => console.log(res.data));

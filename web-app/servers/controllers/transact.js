@@ -4,7 +4,7 @@ const apiResponse = require('../utils/apiResponse.js');
 exports.transactProduct = async (req, res) => {
     // find who initiates this event by decoding the token and getting the user type
     const { id, loggedUserType , productId , userId } = req.body;
-    console.log('1');
+    console.log('create Product ' + id, loggedUserType , productId , userId);
     if ( !userId || !loggedUserType || !productId || !id) {
         return apiResponse.badRequest(res);
     }
@@ -33,9 +33,10 @@ exports.transactProduct = async (req, res) => {
 
 exports.transactProductConsumer = async (req, res) => {
     // find who initiates this event by decoding the token and getting the user type
-    const { id, loggedUserType, name , productId , userId } = req.body;
-    console.log('1');
-    if (!name || !userId || !loggedUserType || !productId || !id) {
+    const { id, loggedUserType , productId , userId } = req.body;
+    console.log('create Producttttttttttttt ' + id, loggedUserType , productId , userId);
+
+    if (!userId || !loggedUserType || !productId || !id) {
         return apiResponse.badRequest(res);
     }
     console.log('2');

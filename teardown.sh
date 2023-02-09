@@ -6,7 +6,7 @@ set -e
 echo "======================================== Removing volumes =========================================================="
 echo ""
 # Shut down the Docker containers for the system tests.
-docker-compose -f artifacts/docker-compose.yaml down -v
+docker compose -f artifacts/docker-compose.yaml down -v
 rm -fr artifacts/network
 docker rm $(docker ps -aq)
 docker kill $(docker ps -aq)

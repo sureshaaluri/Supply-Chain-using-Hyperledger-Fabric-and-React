@@ -21,7 +21,7 @@ COUNTER=1
 MAX_RETRY=5
 
 CC_NAME="dummycc6"
-CC_SRC_PATH="github.com/chaincode/"
+CC_SRC_PATH="/opt/gopath/src/github.com/chaincode/"
 echo "Channel name : "$CHANNEL_NAME
 
 # import utils

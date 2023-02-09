@@ -7,34 +7,24 @@ const Product = (props) => (
   </option>
 );
 
-const User = (props) => (
-  <option key={props.user.UserType} value={props.user.UserID}>
-     {props.user.Name}
-  </option>
-);
 
-
-
-export class CreateOrder extends Component {
+export class DeliveryOrder extends Component {
  
 
     constructor(props) {
       super(props);
 
     this.onChangeProduct = this.onChangeProduct.bind(this);
-    this.onChangeUser = this.onChangeUser.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   
     this.state = {
       ProductId: "",
-      UserId: "",
     };
 
       this.state = {
         role: sessionStorage.getItem('role'),
         usertype:sessionStorage.getItem('usertype'),
         products: [],
-        users:[]
       };
     }
   
@@ -55,17 +45,6 @@ export class CreateOrder extends Component {
           });
         })
         .catch((error) => console.log(error));
-
-
-        axios
-      .get("http://localhost:8090/user/all/manufacturer", {headers: headers})
-      .then((response) => {
-        console.log("response "+JSON.stringify(response))
-        this.setState({
-          users: response.data.data,
-        });
-      })
-      .catch((error) => console.log(error));
     
       }
 
@@ -82,28 +61,10 @@ export class CreateOrder extends Component {
         });
       }
 
-      SelectUser(){
-        return this.state.users.map((currentUser) => {
-          return (
-            <User
-              user={currentUser.Record}
-              deleteUser={this.deleteUser}
-              key={currentUser.Key}
-            />
-          );
-        });
-      }
-
       onChangeProduct(e) {
         this.setState({
           ProductId: e.target.value,
         });
-      }
-
-      onChangeUser(e){
-        this.setState({
-          UserId : e.target.value,
-        })
       }
 
       onSubmit(e){
@@ -111,8 +72,6 @@ export class CreateOrder extends Component {
         const SubmitProduct = {
           id:"admin",
           productId : this.state.ProductId,
-          userId : this.state.UserId,
-          loggedUserType : this.state.role,
          
         }
 
@@ -121,19 +80,19 @@ export class CreateOrder extends Component {
         };
 
           axios
-        .post("http://localhost:8090/product/order", SubmitProduct, {
+        .post("http://localhost:8090/product/delivered", SubmitProduct, {
           headers: headers,
         })
         .then((res) => console.log(res));
 
-        }
 
+      }
 
 
     render() { 
     return (
       <div>
-      <h3>Create New Order</h3>
+      <h3>Delivery Order</h3>
       <form onSubmit={this.onSubmit}>
         <div className="form-group">
           <label>Products: </label>
@@ -149,26 +108,10 @@ export class CreateOrder extends Component {
             {this.CreateOrder()}
           </select>
         </div>
-
-        <div className="form-group">
-          <label>Users: </label>
-          <select
-            ref="usertypeInput"
-            required
-            className="form-control"
-            onChange={this.onChangeUser}
-          >
-            <option value="">
-              Select User
-            </option>
-            {this.SelectUser()}
-          </select>
-          </div>
-
         <div className="form-group">
           <input
             type="submit"
-            value="Create Order"
+            value="Deliver Order"
             className="btn btn-primary"
           />
         </div>
@@ -178,4 +121,4 @@ export class CreateOrder extends Component {
   }
 }
 
-export default CreateOrder
+export default DeliveryOrder

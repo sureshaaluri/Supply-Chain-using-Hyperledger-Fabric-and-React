@@ -152,7 +152,7 @@ func (t *food_supplychain) Invoke(stub shim.ChaincodeStubInterface) pb.Response 
 
 // Private function
 
-//getCounter to the latest value of the counter based on the Asset Type provided as input parameter
+// getCounter to the latest value of the counter based on the Asset Type provided as input parameter
 func getCounter(APIstub shim.ChaincodeStubInterface, AssetType string) int {
 	counterAsBytes, _ := APIstub.GetState(AssetType)
 	counterAsset := CounterNO{}
@@ -163,7 +163,7 @@ func getCounter(APIstub shim.ChaincodeStubInterface, AssetType string) int {
 	return counterAsset.Counter
 }
 
-//incrementCounter to the increase value of the counter based on the Asset Type provided as input parameter by 1
+// incrementCounter to the increase value of the counter based on the Asset Type provided as input parameter by 1
 func incrementCounter(APIstub shim.ChaincodeStubInterface, AssetType string) int {
 	counterAsBytes, _ := APIstub.GetState(AssetType)
 	counterAsset := CounterNO{}
@@ -217,7 +217,7 @@ func (t *food_supplychain) initLedger(APIstub shim.ChaincodeStubInterface, args 
 	return shim.Success(nil)
 }
 
-//sign in
+// sign in
 func (t *food_supplychain) signIn(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 2 {
@@ -248,7 +248,7 @@ func (t *food_supplychain) signIn(APIstub shim.ChaincodeStubInterface, args []st
 	return shim.Success(entityUserBytes)
 }
 
-//create user
+// create user
 func (t *food_supplychain) createUser(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
 
 	if len(args) != 5 {
@@ -819,7 +819,7 @@ func (t *food_supplychain) sellToConsumer(APIstub shim.ChaincodeStubInterface, a
 	return shim.Success(updatedProductAsBytes)
 }
 
-//queryAsset
+// queryAsset
 func (t *food_supplychain) queryAsset(APIstub shim.ChaincodeStubInterface, args []string) pb.Response {
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expected 1 argument")

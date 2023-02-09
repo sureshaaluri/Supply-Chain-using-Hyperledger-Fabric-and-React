@@ -37,6 +37,7 @@ exports.signin = async (req, res) => {
 
     let modelRes;
     if (role === 'manufacturer') {
+        console.log("getting data "+id +password)
         modelRes = await authModel.signin(true, false, false, { id, password });
     } else if (role === 'middlemen') {
         modelRes = await authModel.signin(false, true, false, { id, password });
@@ -56,11 +57,35 @@ exports.getAllUser = async (req, res) => {
 
     let modelRes;
     if (role === 'manufacturer') {
+        console.log("hi controllers");
         modelRes = await authModel.getAllUser(true, false, false, {id});
     } else if (role === 'middlemen') {
         modelRes = await authModel.getAllUser(false, true, false, {id});
     } else if (role === 'consumer') {
         modelRes = await authModel.getAllUser(false, false, true, {id});
+    } else {
+        return apiResponse.badRequest(res);
+    }
+    return apiResponse.send(res, modelRes);
+};
+
+exports.getUserbyId = async (req, res) => {
+
+    const id  = "admin";
+    const { UserId, role } = req.params
+    
+    if (!UserId || !id || !role ) {
+        return apiResponse.badRequest(res);
+    }
+
+    let modelRes;
+    if( role === 'manufacturer' ) {
+        console.log('editUser'+role+UserId)
+        modelRes = await authModel.getUserbyId(true, false, false, { UserId, id });
+    } else if( role === 'middlemen' ) {
+        modelRes = await authModel.getUserbyId(false, true, false,{ UserId, id });
+    } else if( role === 'consumer' ) {
+        modelRes = await authModel.getUserbyId(false, false, true, { UserId, id });
     } else {
         return apiResponse.badRequest(res);
     }

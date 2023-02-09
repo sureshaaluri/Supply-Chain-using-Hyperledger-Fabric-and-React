@@ -68,21 +68,26 @@ export class SignIn extends Component {
 
     console.log(signIn);
 
-    axios
-      .post("http://192.168.0.108:8090/user/signin/" + this.state.role, signIn)
+    
+      // .post("http://192.168.0.108:8090/user/signin/" + this.state.role, signIn)
+      axios
+      .post("http://localhost:8090/user/signin/" + this.state.role, signIn)
       .then((res) => {
-        console.log(res.data.data.accessToken);
-        sessionStorage.setItem("jwtToken", res.data.data.accessToken);
-        sessionStorage.setItem("role", this.state.role);
-        sessionStorage.setItem("usertype", this.state.userType);
+        console.log("response", res);
+        console.log("accessToken", res.data.data.accessToken);
+        
+        const jwtToken = sessionStorage.setItem("jwtToken", res.data.data.accessToken);
+        const role = sessionStorage.setItem("role", this.state.role);
+        const usertype = sessionStorage.setItem("usertype", this.state.userType);
+        window.location = "/products"
       });
 
-    if (this.state.usertype === "admin") {
-      window.location = "/users"
-    }
-    else {
-      window.location = "/products"
-    }
+    // if (this.state.usertype === "admin") {
+    //   window.location = "/users"
+    // }
+    // else {
+      // window.location = "/products"
+    // }
   }
 
   render() {
